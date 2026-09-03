@@ -61,6 +61,14 @@
 
   /* Layout */
   --navbar-height: 56px;
+  --sidebar-width: 220px;
+
+  /* Theme Accents (Refined from reference) */
+  --color-emerald: #10b981;
+  --color-emerald-glow: rgba(16, 185, 129, 0.2);
+  --color-teal: #0d9488;
+  --color-card-light-bg: rgba(22, 33, 54, 0.78);
+  --color-card-border: rgba(148, 163, 184, 0.14);
 }
 
 /* ---------- Reset & Base ---------- */
@@ -89,17 +97,47 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Global Background Image Layer */
+.app-satellite-bg {
+  position: fixed;
+  inset: 0;
+  background-image: linear-gradient(
+      135deg,
+      rgba(11, 17, 32, 0.88) 0%,
+      rgba(15, 23, 42, 0.82) 50%,
+      rgba(8, 14, 26, 0.92) 100%
+    ),
+    url('/watershed_bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
+
 /* ---------- App Layout ---------- */
 .app-layout {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.app-content-area {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
 }
 
 .app-main {
   position: relative;
   flex: 1;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

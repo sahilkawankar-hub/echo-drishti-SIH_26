@@ -65,6 +65,7 @@ export default function MapView({
   activeLocationId,
   selectedSite: propSelectedSite,
   onSelectSite: propOnSelectSite,
+  initialSiteId,
 }) {
   /* Resolve the active location from the registry */
   const loc = useMemo(
@@ -101,6 +102,19 @@ export default function MapView({
   const handleDateChange = useCallback((date) => {
     setActiveDate(date);
   }, []);
+
+  /* Select initial site if provided from dashboard navigation */
+  useEffect(() => {
+    if (initialSiteId) {
+      const match = sitePoints.find((s) => s.id === initialSiteId);
+      if (match) setSelectedSite(match);
+    }
+  }, [initialSiteId, setSelectedSite]);
+
+  /* Close any open site panel when switching locations */
+  useEffect(() => {
+    setSelectedSite(null);
+  }, [activeLocationId, setSelectedSite]);
 
   /* GeoJSON style for the watershed boundary */
   const boundaryStyle = {
@@ -206,4 +220,3 @@ export default function MapView({
     </div>
   );
 }
-
