@@ -10,7 +10,7 @@ import {
 import 'leaflet/dist/leaflet.css';
 import './MapView.css';
 
-import { locations, DEFAULT_LOCATION_ID } from '../../data/locations';
+import { locations } from '../../data/locations';
 
 import watershedBoundaryRaw from '../../data/watershedBoundary.geojson?raw';
 const watershedBoundary = JSON.parse(watershedBoundaryRaw);
@@ -174,6 +174,7 @@ export default function MapView({ layers, activeLocationId }) {
         <SiteDetailPanel
           key={selectedSite.id}
           site={selectedSite}
+          activeLocation={loc}
           activeDate={activeDate}
           onClose={() => setSelectedSite(null)}
         />

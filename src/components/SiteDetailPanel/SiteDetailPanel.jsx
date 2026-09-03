@@ -1,37 +1,40 @@
 import { useState, useCallback, useEffect } from 'react';
 import ReportResult from '../ReportResult/ReportResult';
+import { generateVerificationReport } from '../../utils/ndviCompare';
+import { locations } from '../../data/locations';
 import ndviBeforeImg from '../../assets/ndvi_before_2025-12-01.png';
 import ndviAfterImg from '../../assets/ndvi_after_2026-06-04.png';
 import './SiteDetailPanel.css';
 
 /**
- * Placeholder explanations for the randomly generated report.
- */
-const CONFIRMED_EXPLANATIONS = [
-  'Vegetation cover in this area has increased since completion, consistent with the intervention goals.',
-  'NDVI values show a 12% improvement over the baseline, confirming positive impact.',
-  'Water retention index matches expected post-construction levels.',
-];
-
-const DISCREPANCY_EXPLANATIONS = [
-  'Vegetation cover in this area has not increased since completion. Ground review recommended.',
-  'NDWI readings indicate the water body is significantly smaller than the designed capacity.',
-  'Land-use classification shows encroachment activity near the intervention site.',
-];
-
-/**
  * Side panel that shows a detailed view for a selected saved site.
  * Displays the saved completion photo alongside real Sentinel-2 NDVI imagery,
- * and a "Generate Report" button that produces a comparison result.
+ * and a "Generate Report" button that produces a deterministic NDVI comparison result.
  *
- * @param {{ site: object, activeDate?: 'before' | 'after', onClose: () => void }} props
+ * @param {{ site: object, activeLocation?: object, activeDate?: 'before' | 'after', onClose: () => void }} props
  */
-export default function SiteDetailPanel({ site, activeDate = 'before', onClose }) {
+export default function SiteDetailPanel({
+  site,
+  activeLocation,
+  activeDate = 'before',
+  onClose,
+}) {
   const [report, setReport] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSatelliteLoaded, setIsSatelliteLoaded] = useState(false);
 
-  const satelliteImg = activeDate === 'after' ? ndviAfterImg : ndviBeforeImg;
+  // Fallback to locations registry if activeLocation is not explicitly passed
+  const currentLocation =
+    activeLocation ||
+    (Array.isArray(locations)
+      ? locations.find((l) => l.id === 'chandur-railway') || locations[0]
+      : locations.chandur || locations);
+
+  const satelliteImg =
+    activeDate === 'after'
+      ? currentLocation?.ndviAfter || ndviAfterImg
+      : currentLocation?.ndviBefore || ndviBeforeImg;
+
   const satelliteDateLabel = activeDate === 'after' ? '2026-06-04 (After)' : '2025-12-01 (Before)';
 
   useEffect(() => {
@@ -41,23 +44,19 @@ export default function SiteDetailPanel({ site, activeDate = 'before', onClose }
     return () => clearTimeout(timer);
   }, [activeDate]);
 
-  const handleGenerate = useCallback(() => {
+  const handleGenerate = useCallback(async () => {
     setIsGenerating(true);
     setReport(null);
 
-    // Simulate a short processing delay
-    setTimeout(() => {
-      const isConfirmed = Math.random() > 0.5;
-      const pool = isConfirmed ? CONFIRMED_EXPLANATIONS : DISCREPANCY_EXPLANATIONS;
-      const explanation = pool[Math.floor(Math.random() * pool.length)];
-
-      setReport({
-        status: isConfirmed ? 'confirmed' : 'discrepancy',
-        explanation,
-      });
+    try {
+      const result = await generateVerificationReport(site, currentLocation);
+      setReport(result);
+    } catch (err) {
+      console.error('Failed to generate verification report:', err);
+    } finally {
       setIsGenerating(false);
-    }, 900);
-  }, []);
+    }
+  }, [site, currentLocation]);
 
   /** Format completion date for display */
   const formattedDate = new Date(site.completionDate).toLocaleDateString('en-IN', {
@@ -177,6 +176,9 @@ export default function SiteDetailPanel({ site, activeDate = 'before', onClose }
             <ReportResult
               status={report.status}
               explanation={report.explanation}
+              beforeNdvi={report.beforeNdvi}
+              afterNdvi={report.afterNdvi}
+              delta={report.delta}
             />
           )}
         </div>

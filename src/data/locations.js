@@ -97,5 +97,11 @@ export const locations = [
   },
 ];
 
+/** Compatibility alias for pilot site */
+locations.chandur = locations[0];
+
+/** Existing NDVI overlay bounds for Chandur pilot site */
+export const NDVI_OVERLAY_BOUNDS = locations[0].ndviBounds;
+
 /** The location id to use on initial load */
 export const DEFAULT_LOCATION_ID = 'chandur-railway';
