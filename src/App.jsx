@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import Sidebar from './components/Sidebar/Sidebar';
 import DashboardOverview from './components/Dashboard/DashboardOverview';
+import VerificationQueue from './components/VerificationQueue/VerificationQueue';
+import DisbursementsReports from './components/DisbursementsReports/DisbursementsReports';
 import Navbar from './components/Navbar/Navbar';
 import MapView from './components/MapView/MapView';
 import LayerControls from './components/LayerControls/LayerControls';
@@ -82,13 +84,13 @@ export default function App() {
 
           {activeView === 'queue' && (
             <main className="app-main">
-              <DashboardOverview onNavigateToMap={handleNavigateToMap} />
+              <VerificationQueue onNavigateToMap={handleNavigateToMap} />
             </main>
           )}
 
           {activeView === 'reports' && (
             <main className="app-main">
-              <DashboardOverview onNavigateToMap={handleNavigateToMap} />
+              <DisbursementsReports />
             </main>
           )}
         </div>
