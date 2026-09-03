@@ -16,9 +16,15 @@ export default function App() {
   });
 
   const [activeLocationId, setActiveLocationId] = useState(DEFAULT_LOCATION_ID);
+  const [selectedSite, setSelectedSite] = useState(null);
 
   const handleToggleLayer = useCallback((key) => {
     setLayers((prev) => ({ ...prev, [key]: !prev[key] }));
+  }, []);
+
+  const handleLocationChange = useCallback((id) => {
+    setActiveLocationId(id);
+    setSelectedSite(null);
   }, []);
 
   return (
@@ -26,12 +32,18 @@ export default function App() {
       <Navbar layers={layers} onToggleLayer={handleToggleLayer} />
 
       <main className="app-main">
-        <MapView layers={layers} activeLocationId={activeLocationId} />
+        <MapView
+          layers={layers}
+          activeLocationId={activeLocationId}
+          selectedSite={selectedSite}
+          onSelectSite={setSelectedSite}
+        />
         <LayerControls
           layers={layers}
           onToggleLayer={handleToggleLayer}
           activeLocationId={activeLocationId}
-          onLocationChange={setActiveLocationId}
+          onLocationChange={handleLocationChange}
+          isPanelOpen={!!selectedSite}
         />
       </main>
     </div>

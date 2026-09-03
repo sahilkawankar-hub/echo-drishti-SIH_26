@@ -60,7 +60,12 @@ function FlyToLocation({ center, zoom }) {
 /* ================================================================
    MapView — main full-screen map component
    ================================================================ */
-export default function MapView({ layers, activeLocationId }) {
+export default function MapView({
+  layers,
+  activeLocationId,
+  selectedSite: propSelectedSite,
+  onSelectSite: propOnSelectSite,
+}) {
   /* Resolve the active location from the registry */
   const loc = useMemo(
     () => locations.find((l) => l.id === activeLocationId) || locations[0],
@@ -73,8 +78,10 @@ export default function MapView({ layers, activeLocationId }) {
   /* Temporal state — which NDVI snapshot to display */
   const [activeDate, setActiveDate] = useState('before');
 
-  /* Selected site for the detail panel (null = panel closed) */
-  const [selectedSite, setSelectedSite] = useState(null);
+  /* Selected site for the detail panel (controlled or local fallback) */
+  const [internalSelectedSite, setInternalSelectedSite] = useState(null);
+  const selectedSite = propSelectedSite !== undefined ? propSelectedSite : internalSelectedSite;
+  const setSelectedSite = propOnSelectSite || setInternalSelectedSite;
 
   /* Pick the correct NDVI image based on the temporal toggle */
   const ndviImg = activeDate === 'after' ? loc.ndviAfter : loc.ndviBefore;
@@ -94,11 +101,6 @@ export default function MapView({ layers, activeLocationId }) {
   const handleDateChange = useCallback((date) => {
     setActiveDate(date);
   }, []);
-
-  /* Close any open site panel when switching locations */
-  useEffect(() => {
-    setSelectedSite(null);
-  }, [activeLocationId]);
 
   /* GeoJSON style for the watershed boundary */
   const boundaryStyle = {
