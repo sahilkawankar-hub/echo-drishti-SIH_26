@@ -13,6 +13,9 @@
    ---------------------------------------------------------------- */
 import ndviBeforeChandur from '../assets/ndvi_before_2025-12-01.png';
 import ndviAfterChandur from '../assets/ndvi_after_2026-06-04.png';
+import ndwiBeforeChandur from '../assets/ndwi_before.png';
+import ndwiAfterChandur from '../assets/ndwi_after.png';
+import landuseChandur from '../assets/landuse.png';
 
 /* ----------------------------------------------------------------
    Reference-site NDVI imagery (Hiware Bazar & Ralegan Siddhi)
@@ -63,6 +66,9 @@ export const locations = [
     ],
     ndviBefore: ndviBeforeChandur,
     ndviAfter: ndviAfterChandur,
+    ndwiBefore: ndwiBeforeChandur,
+    ndwiAfter: ndwiAfterChandur,
+    landuse: landuseChandur,
     hasPhotoMarkers: true,
     hasSiteMarkers: true,
     hasBoundary: true,

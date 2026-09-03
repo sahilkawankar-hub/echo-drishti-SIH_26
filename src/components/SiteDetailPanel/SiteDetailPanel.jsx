@@ -23,6 +23,12 @@ export default function SiteDetailPanel({
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSatelliteLoaded, setIsSatelliteLoaded] = useState(false);
 
+  const [panelDate, setPanelDate] = useState(activeDate || 'before');
+
+  useEffect(() => {
+    if (activeDate) setPanelDate(activeDate);
+  }, [activeDate]);
+
   // Fallback to locations registry if activeLocation is not explicitly passed
   const currentLocation =
     activeLocation ||
@@ -31,18 +37,18 @@ export default function SiteDetailPanel({
       : locations.chandur || locations);
 
   const satelliteImg =
-    activeDate === 'after'
+    panelDate === 'after'
       ? currentLocation?.ndviAfter || ndviAfterImg
       : currentLocation?.ndviBefore || ndviBeforeImg;
 
-  const satelliteDateLabel = activeDate === 'after' ? '2026-06-04 (After)' : '2025-12-01 (Before)';
+  const satelliteDateLabel = panelDate === 'after' ? '2026-06-04 (After)' : '2025-12-01 (Before)';
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsSatelliteLoaded(true);
     }, 250);
     return () => clearTimeout(timer);
-  }, [activeDate]);
+  }, [panelDate]);
 
   const handleGenerate = useCallback(async () => {
     setIsGenerating(true);
@@ -114,8 +120,26 @@ export default function SiteDetailPanel({
 
             {/* RIGHT — Current Satellite View (Real Sentinel-2 NDVI) */}
             <div className="site-panel__card">
-              <div className="site-panel__card-label">
-                <span>🛰️</span> NDVI ({activeDate === 'after' ? 'After' : 'Before'})
+              <div className="site-panel__card-label site-panel__card-label--split">
+                <span>🛰️ NDVI</span>
+                <div className="site-panel__ndvi-pills">
+                  <button
+                    className={`site-panel__ndvi-pill ${panelDate === 'before' ? 'active' : ''}`}
+                    onClick={() => setPanelDate('before')}
+                    type="button"
+                    title="View Pre-intervention Baseline (2025-12-01)"
+                  >
+                    Before
+                  </button>
+                  <button
+                    className={`site-panel__ndvi-pill ${panelDate === 'after' ? 'active' : ''}`}
+                    onClick={() => setPanelDate('after')}
+                    type="button"
+                    title="View Post-intervention Monitoring (2026-06-04)"
+                  >
+                    After
+                  </button>
+                </div>
               </div>
               {!isSatelliteLoaded ? (
                 <div className="site-panel__satellite-placeholder">
@@ -128,6 +152,7 @@ export default function SiteDetailPanel({
                     className="site-panel__card-img"
                     src={satelliteImg}
                     alt={`Sentinel-2 NDVI ${satelliteDateLabel}`}
+                    key={panelDate}
                   />
                   <div className="site-panel__satellite-tag">
                     <span>Sentinel-2 • {satelliteDateLabel}</span>
@@ -179,6 +204,7 @@ export default function SiteDetailPanel({
               beforeNdvi={report.beforeNdvi}
               afterNdvi={report.afterNdvi}
               delta={report.delta}
+              comparisonPoints={report.comparisonPoints}
             />
           )}
         </div>

@@ -87,6 +87,12 @@ export default function MapView({
   /* Pick the correct NDVI image based on the temporal toggle */
   const ndviImg = activeDate === 'after' ? loc.ndviAfter : loc.ndviBefore;
 
+  /* Pick the correct NDWI (Water) image based on the temporal toggle */
+  const ndwiImg = activeDate === 'after' ? (loc.ndwiAfter || loc.ndviAfter) : (loc.ndwiBefore || loc.ndviBefore);
+
+  /* Land use / land cover classification image */
+  const landuseImg = loc.landuse;
+
   /* Cursor / zoom info */
   const [mapInfo, setMapInfo] = useState({
     lat: loc.center[0].toFixed(4),
@@ -156,10 +162,30 @@ export default function MapView({
         {/* ---- NDVI Temporal Overlay ---- */}
         {layers.vegetation && ndviImg && (
           <ImageOverlay
-            key={`${loc.id}-${activeDate}`}
+            key={`${loc.id}-ndvi-${activeDate}`}
             url={ndviImg}
             bounds={loc.ndviBounds}
             opacity={0.55}
+          />
+        )}
+
+        {/* ---- Water (NDWI) Temporal Overlay ---- */}
+        {layers.water && ndwiImg && (
+          <ImageOverlay
+            key={`${loc.id}-ndwi-${activeDate}`}
+            url={ndwiImg}
+            bounds={loc.ndviBounds}
+            opacity={0.7}
+          />
+        )}
+
+        {/* ---- Land Use / Land Cover (LULC) Overlay ---- */}
+        {layers.landuse && landuseImg && (
+          <ImageOverlay
+            key={`${loc.id}-landuse`}
+            url={landuseImg}
+            bounds={loc.ndviBounds}
+            opacity={0.6}
           />
         )}
 
@@ -184,7 +210,7 @@ export default function MapView({
       </MapContainer>
 
       {/* ---- Before / After Toggle ---- */}
-      <BeforeAfterToggle onChange={handleDateChange} />
+      <BeforeAfterToggle value={activeDate} onChange={handleDateChange} />
 
       {/* ---- Site Detail Panel (slide-in) ---- */}
       {selectedSite && (

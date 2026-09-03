@@ -10,14 +10,14 @@ import './BeforeAfterToggle.css';
  *
  * @param {{ onChange?: (activeDate: 'before' | 'after') => void }} props
  */
-export default function BeforeAfterToggle({ onChange }) {
-  const [activeDate, setActiveDate] = useState('before');
+export default function BeforeAfterToggle({ value, onChange }) {
+  const [internalDate, setInternalDate] = useState('before');
+  const activeDate = value !== undefined ? value : internalDate;
 
   const handleSwitch = useCallback(
-    (value) => {
-      setActiveDate(value);
-      console.log(`[BeforeAfterToggle] activeDate changed → "${value}"`);
-      onChange?.(value);
+    (val) => {
+      setInternalDate(val);
+      onChange?.(val);
     },
     [onChange]
   );

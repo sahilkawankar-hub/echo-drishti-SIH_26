@@ -151,6 +151,44 @@
   background: rgba(15, 23, 42, 0.5);
 }
 
+.site-panel__card-label--split {
+  justify-content: space-between;
+}
+
+.site-panel__ndvi-pills {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 2px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.site-panel__ndvi-pill {
+  background: transparent;
+  border: none;
+  color: #7a8ea0;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 7px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.site-panel__ndvi-pill:hover {
+  color: #e1e8f0;
+}
+
+.site-panel__ndvi-pill.active {
+  background: var(--color-primary, #38bdf8);
+  color: #0b1120;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+}
+
 .site-panel__card-img {
   width: 100%;
   height: 130px;
