@@ -1,0 +1,105 @@
+/* ============================================================
+   Watershed Monitor — Global Styles & Design Tokens
+   ============================================================ */
+
+/* ---------- CSS Custom Properties (Design Tokens) ---------- */
+:root {
+  /* Palette */
+  --color-bg-dark: #0b1120;
+  --color-bg-nav: rgba(11, 17, 32, 0.82);
+  --color-bg-panel: rgba(15, 23, 42, 0.88);
+  --color-bg-card: rgba(30, 41, 59, 0.7);
+  --color-surface: #1e293b;
+  --color-border: rgba(99, 155, 255, 0.12);
+  --color-border-active: rgba(99, 155, 255, 0.35);
+
+  --color-primary: #38bdf8;
+  --color-primary-glow: rgba(56, 189, 248, 0.25);
+  --color-accent-green: #34d399;
+  --color-accent-blue: #60a5fa;
+  --color-accent-amber: #fbbf24;
+  --color-accent-red: #f87171;
+
+  --color-text: #e2e8f0;
+  --color-text-muted: #94a3b8;
+  --color-text-bright: #f1f5f9;
+
+  /* Typography */
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-size-xs: 0.7rem;
+  --font-size-sm: 0.8rem;
+  --font-size-base: 0.9rem;
+  --font-size-lg: 1.05rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.6rem;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.45);
+  --shadow-glow: 0 0 20px var(--color-primary-glow);
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Layout */
+  --navbar-height: 56px;
+}
+
+/* ---------- Reset & Base ---------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  background: var(--color-bg-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------- App Layout ---------- */
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.app-main {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}

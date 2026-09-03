@@ -1,0 +1,168 @@
+/* ============================================================
+   Navbar Component Styles
+   ============================================================ */
+
+.navbar {
+  position: relative;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--navbar-height);
+  padding: 0 var(--space-5);
+  background: var(--color-bg-nav);
+  backdrop-filter: blur(16px) saturate(1.5);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+}
+
+/* ---------- Brand / Title ---------- */
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  user-select: none;
+}
+
+.navbar__icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent-green));
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  box-shadow: var(--shadow-glow);
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 12px var(--color-primary-glow); }
+  50%      { box-shadow: 0 0 22px var(--color-primary-glow), 0 0 40px rgba(52, 211, 153, 0.12); }
+}
+
+.navbar__title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--color-text-bright) 30%, var(--color-primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.navbar__subtitle {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: -2px;
+}
+
+/* ---------- Layer Buttons ---------- */
+.navbar__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.layer-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-bg-card);
+  color: var(--color-text-muted);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+  user-select: none;
+  white-space: nowrap;
+}
+
+.layer-btn:hover {
+  background: rgba(30, 41, 59, 0.95);
+  color: var(--color-text);
+  border-color: var(--color-border-active);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.layer-btn--active {
+  color: var(--color-text-bright);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 10px var(--color-primary-glow), var(--shadow-sm);
+}
+
+/* Per-layer accent when active */
+.layer-btn--active[data-layer="vegetation"] {
+  background: rgba(52, 211, 153, 0.12);
+  border-color: var(--color-accent-green);
+  color: var(--color-accent-green);
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.2);
+}
+
+.layer-btn--active[data-layer="water"] {
+  background: rgba(96, 165, 250, 0.12);
+  border-color: var(--color-accent-blue);
+  color: var(--color-accent-blue);
+  box-shadow: 0 0 10px rgba(96, 165, 250, 0.2);
+}
+
+.layer-btn--active[data-layer="landuse"] {
+  background: rgba(251, 191, 36, 0.12);
+  border-color: var(--color-accent-amber);
+  color: var(--color-accent-amber);
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.2);
+}
+
+.layer-btn__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.6;
+  transition: opacity var(--transition-fast);
+}
+
+.layer-btn--active .layer-btn__dot {
+  opacity: 1;
+}
+
+/* ---------- Status Indicator ---------- */
+.navbar__status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-xl);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+}
+
+.navbar__status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent-green);
+  animation: blink 2s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}

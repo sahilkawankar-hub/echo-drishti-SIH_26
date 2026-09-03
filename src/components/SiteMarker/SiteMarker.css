@@ -1,0 +1,81 @@
+/* ============================================================
+   SiteMarker Component Styles
+   ============================================================ */
+
+/* ---------- Custom pin-style marker icon ---------- */
+.site-marker-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.site-marker-icon__pin {
+  position: relative;
+  width: 28px;
+  height: 36px;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+  transition: transform var(--transition-fast), filter var(--transition-fast);
+}
+
+.site-marker-icon__pin:hover {
+  transform: scale(1.15) translateY(-2px);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.45));
+}
+
+/* Pin body — teardrop shape via SVG-like CSS */
+.site-marker-icon__body {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50% 50% 50% 0;
+  transform: translateX(-50%) rotate(-45deg);
+  background: linear-gradient(135deg, var(--color-primary), #2563eb);
+  border: 2.5px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 10px var(--color-primary-glow);
+}
+
+.site-marker-icon__center {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* Pin shadow on ground */
+.site-marker-icon__shadow {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Subtle bounce on appear */
+@keyframes site-pin-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.site-marker-icon__pin {
+  animation: site-pin-drop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}

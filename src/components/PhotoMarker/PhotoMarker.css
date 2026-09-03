@@ -1,0 +1,157 @@
+/* ============================================================
+   PhotoMarker Component Styles
+   ============================================================ */
+
+/* ---------- Custom circular marker icon ---------- */
+.photo-marker-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* size is set by Leaflet's iconSize, but we style the inner look */
+}
+
+.photo-marker-icon__dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2.5px solid #fff;
+  box-shadow:
+    0 0 0 2px rgba(0, 0, 0, 0.2),
+    var(--shadow-md);
+  transition: transform var(--transition-fast);
+  cursor: pointer;
+}
+
+.photo-marker-icon__dot--confirmed {
+  background: var(--color-accent-green);
+  box-shadow:
+    0 0 0 2px rgba(0, 0, 0, 0.2),
+    0 0 8px rgba(52, 211, 153, 0.45);
+}
+
+.photo-marker-icon__dot--mismatch {
+  background: var(--color-accent-red);
+  box-shadow:
+    0 0 0 2px rgba(0, 0, 0, 0.2),
+    0 0 8px rgba(248, 113, 113, 0.45);
+}
+
+.photo-marker-icon__dot:hover {
+  transform: scale(1.25);
+}
+
+/* Pulse ring animation on the marker */
+.photo-marker-icon__ring {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  animation: marker-pulse 2.5s ease-out infinite;
+  pointer-events: none;
+}
+
+.photo-marker-icon__ring--confirmed {
+  border: 2px solid var(--color-accent-green);
+}
+
+.photo-marker-icon__ring--mismatch {
+  border: 2px solid var(--color-accent-red);
+}
+
+@keyframes marker-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* ---------- Custom Leaflet Popup Styling ---------- */
+.leaflet-popup-content-wrapper:has(.photo-popup) {
+  background: var(--color-bg-panel);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(14px);
+  padding: 0;
+  overflow: hidden;
+}
+
+.leaflet-popup-tip-container .leaflet-popup-tip {
+  background: var(--color-bg-panel);
+  border: 1px solid var(--color-border);
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  width: auto !important;
+}
+
+/* ---------- Popup Card Layout ---------- */
+.photo-popup {
+  width: 260px;
+  font-family: var(--font-family);
+}
+
+.photo-popup__img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.photo-popup__body {
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.photo-popup__name {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text-bright);
+  letter-spacing: -0.01em;
+}
+
+.photo-popup__insight {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  line-height: 1.45;
+}
+
+/* ---------- Status Badge ---------- */
+.photo-popup__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: var(--radius-xl);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  width: fit-content;
+  letter-spacing: 0.02em;
+}
+
+.photo-popup__badge--confirmed {
+  background: rgba(52, 211, 153, 0.14);
+  color: var(--color-accent-green);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+}
+
+.photo-popup__badge--mismatch {
+  background: rgba(248, 113, 113, 0.14);
+  color: var(--color-accent-red);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+.photo-popup__badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
