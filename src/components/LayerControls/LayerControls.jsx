@@ -1,23 +1,86 @@
 import './LayerControls.css';
+import { locations } from '../../data/locations';
 
 /**
- * Floating panel on the map with toggle switches for each data layer.
- * Mirrors the state held in <App /> and provides a secondary control surface
- * (the primary controls are in the Navbar buttons).
+ * Floating panel on the map with a location switcher and toggle switches
+ * for each data layer. The location switcher groups sites into
+ * "Pilot Site" and "Reference Cases".
  *
- * @param {{ layers: Record<string, boolean>, onToggleLayer: (key: string) => void }} props
+ * @param {{
+ *   layers: Record<string, boolean>,
+ *   onToggleLayer: (key: string) => void,
+ *   activeLocationId: string,
+ *   onLocationChange: (id: string) => void,
+ * }} props
  */
-export default function LayerControls({ layers, onToggleLayer }) {
+export default function LayerControls({
+  layers,
+  onToggleLayer,
+  activeLocationId,
+  onLocationChange,
+}) {
   const layerDefs = [
     { key: 'vegetation', label: 'Vegetation (NDVI)', icon: '🌿' },
     { key: 'water',      label: 'Water (NDWI)',      icon: '💧' },
     { key: 'landuse',    label: 'Land Use / Cover',   icon: '🏗️' },
   ];
 
+  const pilotLocations = locations.filter((l) => l.type === 'pilot');
+  const referenceLocations = locations.filter((l) => l.type === 'reference');
+
   return (
     <div className="layer-controls" id="layer-controls-panel">
       <div className="layer-controls__panel">
-        {/* Header */}
+
+        {/* ---- Location Switcher ---- */}
+        <div className="location-section" id="location-switcher">
+          <div className="layer-controls__header">
+            <span className="layer-controls__header-icon">📍</span>
+            <span className="layer-controls__title">Locations</span>
+          </div>
+
+          {/* Pilot Site Group */}
+          <span className="location-section__group-label">Pilot Site</span>
+          {pilotLocations.map((loc) => {
+            const isActive = loc.id === activeLocationId;
+            return (
+              <div
+                key={loc.id}
+                className={`location-row${isActive ? ' location-row--active' : ''}`}
+                onClick={() => onLocationChange(loc.id)}
+                role="radio"
+                aria-checked={isActive}
+                id={`location-row-${loc.id}`}
+              >
+                <span className={`location-row__radio${isActive ? ' location-row__radio--active' : ''}`} />
+                <span className="location-row__name">{loc.name}</span>
+              </div>
+            );
+          })}
+
+          {/* Reference Cases Group */}
+          <span className="location-section__group-label">Reference Cases</span>
+          {referenceLocations.map((loc) => {
+            const isActive = loc.id === activeLocationId;
+            return (
+              <div
+                key={loc.id}
+                className={`location-row${isActive ? ' location-row--active' : ''}`}
+                onClick={() => onLocationChange(loc.id)}
+                role="radio"
+                aria-checked={isActive}
+                id={`location-row-${loc.id}`}
+              >
+                <span className={`location-row__radio${isActive ? ' location-row__radio--active' : ''}`} />
+                <span className="location-row__name">{loc.name}</span>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="layer-controls__divider" />
+
+        {/* ---- Data Layers ---- */}
         <div className="layer-controls__header">
           <span className="layer-controls__header-icon">📡</span>
           <span className="layer-controls__title">Data Layers</span>
@@ -55,3 +118,4 @@ export default function LayerControls({ layers, onToggleLayer }) {
     </div>
   );
 }
+

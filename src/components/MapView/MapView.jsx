@@ -1,19 +1,19 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import {
   MapContainer,
   TileLayer,
   GeoJSON,
   ImageOverlay,
   useMapEvents,
+  useMap,
 } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import './MapView.css';
 
+import { locations, DEFAULT_LOCATION_ID } from '../../data/locations';
+
 import watershedBoundaryRaw from '../../data/watershedBoundary.geojson?raw';
 const watershedBoundary = JSON.parse(watershedBoundaryRaw);
-
-import ndviBeforeImg from '../../assets/ndvi_before_2025-12-01.png';
-import ndviAfterImg from '../../assets/ndvi_after_2026-06-04.png';
 
 import photoPoints from '../../data/photoPoints';
 import PhotoMarker from '../PhotoMarker/PhotoMarker';
@@ -22,22 +22,6 @@ import sitePoints from '../../data/sitePoints';
 import SiteMarker from '../SiteMarker/SiteMarker';
 import SiteDetailPanel from '../SiteDetailPanel/SiteDetailPanel';
 import NdviLegend from '../NdviLegend/NdviLegend';
-
-/* ----------------------------------------------------------------
-   Default map centre & zoom — update these later
-   ---------------------------------------------------------------- */
-const DEFAULT_CENTER = [20.82, 77.98]; // Chandur Railway, Amravati district
-const DEFAULT_ZOOM = 13;
-
-/* ----------------------------------------------------------------
-   Real NDVI overlay bounds derived from the Sentinel-2 GeoTIFF.
-   Both before & after images share the same geographic extent.
-   Format: [[south, west], [north, east]]
-   ---------------------------------------------------------------- */
-const NDVI_OVERLAY_BOUNDS = [
-  [20.807151, 77.960358], // south-west
-  [20.832863, 77.999668], // north-east
-];
 
 /* ----------------------------------------------------------------
    Sub-component: tracks cursor position & zoom and reports them
@@ -58,13 +42,33 @@ function MapEventReporter({ onUpdate }) {
   return null;
 }
 
+/* ----------------------------------------------------------------
+   Sub-component: smoothly flies the map to a new location
+   ---------------------------------------------------------------- */
+function FlyToLocation({ center, zoom }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (center && zoom != null) {
+      map.flyTo(center, zoom, { duration: 1.4 });
+    }
+  }, [map, center, zoom]);
+
+  return null;
+}
+
 /* ================================================================
    MapView — main full-screen map component
    ================================================================ */
-export default function MapView({ layers }) {
-  /* Boundary GeoJSON */
-  const boundary = watershedBoundary;
+export default function MapView({ layers, activeLocationId }) {
+  /* Resolve the active location from the registry */
+  const loc = useMemo(
+    () => locations.find((l) => l.id === activeLocationId) || locations[0],
+    [activeLocationId],
+  );
 
+  /* Boundary GeoJSON — only for locations that have one */
+  const boundary = loc.hasBoundary ? watershedBoundary : null;
 
   /* Temporal state — which NDVI snapshot to display */
   const [activeDate, setActiveDate] = useState('before');
@@ -73,13 +77,13 @@ export default function MapView({ layers }) {
   const [selectedSite, setSelectedSite] = useState(null);
 
   /* Pick the correct NDVI image based on the temporal toggle */
-  const ndviImg = activeDate === 'after' ? ndviAfterImg : ndviBeforeImg;
+  const ndviImg = activeDate === 'after' ? loc.ndviAfter : loc.ndviBefore;
 
   /* Cursor / zoom info */
   const [mapInfo, setMapInfo] = useState({
-    lat: DEFAULT_CENTER[0].toFixed(4),
-    lng: DEFAULT_CENTER[1].toFixed(4),
-    zoom: DEFAULT_ZOOM,
+    lat: loc.center[0].toFixed(4),
+    lng: loc.center[1].toFixed(4),
+    zoom: loc.zoom,
   });
 
   const handleMapUpdate = useCallback((updater) => {
@@ -90,6 +94,11 @@ export default function MapView({ layers }) {
   const handleDateChange = useCallback((date) => {
     setActiveDate(date);
   }, []);
+
+  /* Close any open site panel when switching locations */
+  useEffect(() => {
+    setSelectedSite(null);
+  }, [activeLocationId]);
 
   /* GeoJSON style for the watershed boundary */
   const boundaryStyle = {
@@ -104,8 +113,8 @@ export default function MapView({ layers }) {
   return (
     <div className="map-wrapper" id="map-wrapper">
       <MapContainer
-        center={DEFAULT_CENTER}
-        zoom={DEFAULT_ZOOM}
+        center={loc.center}
+        zoom={loc.zoom}
         zoomControl={true}
         style={{ width: '100%', height: '100%' }}
       >
@@ -114,6 +123,9 @@ export default function MapView({ layers }) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+
+        {/* ---- Fly-to animation on location change ---- */}
+        <FlyToLocation center={loc.center} zoom={loc.zoom} />
 
         {/* ---- Watershed Boundary Polygon ---- */}
         {boundary && (
@@ -124,29 +136,31 @@ export default function MapView({ layers }) {
           />
         )}
 
-        {/* ---- NDVI Temporal Overlay — real Sentinel-2 PNG ---- */}
-        {layers.vegetation && (
+        {/* ---- NDVI Temporal Overlay ---- */}
+        {layers.vegetation && ndviImg && (
           <ImageOverlay
-            key={activeDate}
+            key={`${loc.id}-${activeDate}`}
             url={ndviImg}
-            bounds={NDVI_OVERLAY_BOUNDS}
+            bounds={loc.ndviBounds}
             opacity={0.55}
           />
         )}
 
-        {/* ---- Photo Survey Markers ---- */}
-        {photoPoints.map((point) => (
-          <PhotoMarker key={point.id} point={point} />
-        ))}
+        {/* ---- Photo Survey Markers (pilot site only) ---- */}
+        {loc.hasPhotoMarkers &&
+          photoPoints.map((point) => (
+            <PhotoMarker key={point.id} point={point} />
+          ))}
 
-        {/* ---- Saved Site Markers ---- */}
-        {sitePoints.map((site) => (
-          <SiteMarker
-            key={site.id}
-            site={site}
-            onSelect={setSelectedSite}
-          />
-        ))}
+        {/* ---- Saved Site Markers (pilot site only) ---- */}
+        {loc.hasSiteMarkers &&
+          sitePoints.map((site) => (
+            <SiteMarker
+              key={site.id}
+              site={site}
+              onSelect={setSelectedSite}
+            />
+          ))}
 
         {/* ---- Event Reporter (cursor coords / zoom) ---- */}
         <MapEventReporter onUpdate={handleMapUpdate} />
@@ -188,3 +202,4 @@ export default function MapView({ layers }) {
     </div>
   );
 }
+
