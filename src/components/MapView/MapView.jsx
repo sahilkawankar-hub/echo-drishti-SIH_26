@@ -118,10 +118,11 @@ export default function MapView({ layers, activeLocationId }) {
         zoomControl={true}
         style={{ width: '100%', height: '100%' }}
       >
-        {/* ---- Base Tile Layer (OpenStreetMap) ---- */}
+        {/* ---- Base Tile Layer (Esri World Imagery) ---- */}
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+          maxZoom={19}
         />
 
         {/* ---- Fly-to animation on location change ---- */}
