@@ -29,9 +29,10 @@ export default function SiteDetailPanel({
     if (activeDate) setPanelDate(activeDate);
   }, [activeDate]);
 
-  // Fallback to locations registry if activeLocation is not explicitly passed
+  // Fallback to locations registry matching site.locationId or pilot site
   const currentLocation =
     activeLocation ||
+    (site?.locationId ? locations.find((l) => l.id === site.locationId) : null) ||
     (Array.isArray(locations)
       ? locations.find((l) => l.id === 'chandur-railway') || locations[0]
       : locations.chandur || locations);
@@ -41,7 +42,10 @@ export default function SiteDetailPanel({
       ? currentLocation?.ndviAfter || ndviAfterImg
       : currentLocation?.ndviBefore || ndviBeforeImg;
 
-  const satelliteDateLabel = panelDate === 'after' ? '2026-06-04 (After)' : '2025-12-01 (Before)';
+  const isPilot = currentLocation?.id === 'chandur-railway';
+  const satelliteDateLabel = panelDate === 'after'
+    ? (isPilot ? '2026-06-04 (After)' : 'Post-Intervention Sentinel-2')
+    : (isPilot ? '2025-12-01 (Before)' : 'Pre-Intervention Baseline');
 
   useEffect(() => {
     const timer = setTimeout(() => {

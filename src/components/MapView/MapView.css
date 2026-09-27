@@ -85,3 +85,153 @@
   color: var(--color-text);
   font-weight: 600;
 }
+
+/* ---------- Leaflet Scale Bar (Dark Theme) ---------- */
+.leaflet-control-scale {
+  margin-bottom: 8px !important;
+  margin-left: 8px !important;
+}
+
+.leaflet-control-scale-line {
+  background: rgba(250, 246, 240, 0.94) !important;
+  backdrop-filter: blur(8px);
+  border-color: var(--color-primary) !important;
+  color: var(--color-text-bright) !important;
+  font-family: var(--font-family) !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ---------- GIS Quick Action Toolbar (Top-Right / Top-Left) ---------- */
+.map-gis-tools-bar {
+  position: absolute;
+  top: 14px;
+  left: 60px;
+  z-index: 850;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.map-gis-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.map-gis-btn:hover {
+  background: var(--color-bg-subtle);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.map-gis-btn--active {
+  background: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: #ffffff !important;
+}
+
+.map-gis-btn--propose {
+  background: #eaf5ee;
+  border-color: #ccebd7;
+  color: #1e6b3e;
+}
+
+.map-gis-btn--propose:hover,
+.map-gis-btn--propose-active {
+  background: #1e6b3e !important;
+  color: #ffffff !important;
+  border-color: #1e6b3e !important;
+}
+
+.map-gis-badge-officer {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  background: #eaf5ee;
+  border: 1px solid #ccebd7;
+  border-radius: var(--radius-sm);
+  color: #1e6b3e;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  user-select: none;
+}
+
+/* Active Propose Banner */
+.propose-banner {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 920;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 16px;
+  background: #ffffff;
+  border: 1.5px solid #1e6b3e;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 18px rgba(61, 20, 38, 0.15);
+  color: #23151e;
+  font-size: 12px;
+  font-weight: 700;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translate(-50%, -10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.propose-pulse-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #1e6b3e;
+  box-shadow: 0 0 8px #1e6b3e;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.8; }
+}
+
+.propose-banner-cancel {
+  background: #f4efe6;
+  border: 1px solid #e5dcd0;
+  color: #7d6d76;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  margin-left: 6px;
+}
+
+.propose-banner-cancel:hover {
+  background: #fdf1e3;
+  color: #a6621e;
+  border-color: #f4ddc4;
+}
+

@@ -34,20 +34,26 @@ export default function ReportResult({
   comparisonPoints,
 }) {
   const [showAllPoints, setShowAllPoints] = useState(true);
+  const isPending = status === 'pending';
   const isConfirmed = status === 'confirmed';
-  const modifier = isConfirmed ? 'confirmed' : 'discrepancy';
-  const badgeLabel = isConfirmed
+  const modifier = isPending ? 'pending' : isConfirmed ? 'confirmed' : 'discrepancy';
+  const badgeLabel = isPending
+    ? 'Analysis Pending — Awaiting Imagery'
+    : isConfirmed
     ? 'Confirmed — matches satellite'
     : 'Discrepancy — needs review';
-  const icon = isConfirmed ? '✅' : '⚠️';
+  const icon = isPending ? '⏳' : isConfirmed ? '✅' : '⚠️';
 
   const hasMetrics =
     beforeNdvi !== undefined &&
+    beforeNdvi !== null &&
     afterNdvi !== undefined &&
-    delta !== undefined;
+    afterNdvi !== null &&
+    delta !== undefined &&
+    delta !== null;
 
   const formatNdvi = (val) => {
-    if (typeof val !== 'number') return '--';
+    if (typeof val !== 'number' || isNaN(val)) return '--';
     return val > 0 ? `+${val.toFixed(2)}` : val.toFixed(2);
   };
 
@@ -66,7 +72,7 @@ export default function ReportResult({
       </span>
 
       {/* Top 3 Summary Metric Cards */}
-      {hasMetrics && (
+      {hasMetrics ? (
         <div className="report-result__metrics" id="report-result-metrics">
           <div className="report-result__metric">
             <span className="report-result__metric-label">Baseline NDVI</span>
@@ -80,14 +86,26 @@ export default function ReportResult({
             <span className="report-result__metric-label">Delta (Δ)</span>
             <span
               className={`report-result__metric-value report-result__metric-value--${
-                delta > 0.1 ? 'positive' : 'neutral'
+                delta >= 0.1 ? 'positive' : 'neutral'
               }`}
             >
               {formatNdvi(delta)}
             </span>
           </div>
         </div>
-      )}
+      ) : isPending ? (
+        <div className="report-result__pending-box" style={{
+          padding: '10px 14px',
+          background: 'rgba(56, 189, 248, 0.08)',
+          border: '1px solid rgba(56, 189, 248, 0.2)',
+          borderRadius: '8px',
+          fontSize: '12px',
+          color: '#bae6fd',
+          lineHeight: '1.4'
+        }}>
+          🛰️ Multi-spectral comparison is pending for this coordinate. No automated confirmation or discrepancy verdict has been rendered.
+        </div>
+      ) : null}
 
       {/* Primary Explanation Text */}
       <p className="report-result__text">{explanation}</p>

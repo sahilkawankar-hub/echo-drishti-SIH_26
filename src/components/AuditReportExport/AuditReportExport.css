@@ -1,0 +1,230 @@
+/* ============================================================
+   AuditReportExport Styles - Warm Ivory & Deep Plum Theme
+   ============================================================ */
+
+.dossier-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(35, 21, 30, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.dossier-modal {
+  width: 100%;
+  max-width: 780px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  border: 1.5px solid #ECE4D8;
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(61, 20, 38, 0.15);
+  overflow: hidden;
+}
+
+/* Action Buttons Header */
+.dossier-modal-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 22px;
+  background: #FAF6F0;
+  border-bottom: 1px solid #ECE4D8;
+  flex-shrink: 0;
+}
+
+.dossier-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.dossier-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: #F4EFE6;
+  border: 1px solid #E5DCD0;
+  border-radius: 6px;
+  color: #3D1426;
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.dossier-action-btn:hover {
+  background: #EFE8DE;
+  color: #23151E;
+}
+
+.dossier-action-btn--print {
+  background: #3D1426;
+  border-color: #3D1426;
+  color: #ffffff;
+}
+
+.dossier-action-btn--print:hover {
+  background: #2D0E1C;
+  color: #ffffff;
+}
+
+.dossier-close-btn {
+  background: #FFFFFF;
+  border: 1px solid #ECE4D8;
+  border-radius: 6px;
+  color: #7D6D76;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.dossier-close-btn:hover {
+  background: #FDF1E3;
+  color: #B91C1C;
+}
+
+/* Printable Document Paper */
+.dossier-paper {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  background: #FAF6F0;
+  color: #1a1a1a;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.dossier-page {
+  background: #ffffff;
+  padding: 32px;
+  box-shadow: 0 4px 16px rgba(61, 20, 38, 0.08);
+  border: 1px solid #ECE4D8;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.dossier-top-gov-crest {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+  border-bottom: 2px solid #23151E;
+  padding-bottom: 12px;
+}
+
+.dossier-crest-img {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+}
+
+.dossier-crest-title {
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.dossier-crest-sub {
+  font-size: 11px;
+  color: #4a4a4a;
+}
+
+.dossier-doc-title {
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin: 8px 0 2px;
+  text-align: center;
+}
+
+.dossier-doc-sub {
+  font-size: 11.5px;
+  color: #4a4a4a;
+  text-align: center;
+  display: block;
+}
+
+.dossier-meta-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.dossier-meta-table td {
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+}
+
+.dossier-meta-label {
+  font-weight: bold;
+  background: #f9f9f9;
+  width: 30%;
+}
+
+.dossier-meta-val {
+  color: #111;
+}
+
+.dossier-section-title {
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-bottom: 1px solid #23151E;
+  padding-bottom: 2px;
+  margin-top: 10px;
+}
+
+.dossier-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10.5px;
+}
+
+.dossier-data-table th,
+.dossier-data-table td {
+  padding: 5px 8px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.dossier-data-table th {
+  background: #f0f0f0;
+  font-weight: bold;
+}
+
+.dossier-sign-block {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 24px;
+}
+
+.dossier-sign-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 10.5px;
+  border-top: 1px dashed #444;
+  padding-top: 6px;
+  width: 180px;
+}

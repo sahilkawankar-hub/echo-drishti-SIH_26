@@ -1,0 +1,334 @@
+/* ============================================================
+   BoundarySearch Component Styles - Official Government Theme
+   ============================================================ */
+
+/* ---- Container ---- */
+.boundary-search {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: 440px;
+  max-width: calc(100vw - 320px);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* ---- Search Bar ---- */
+.boundary-search__bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: #ffffff;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.boundary-search__bar--focused {
+  border-color: var(--color-primary);
+  background: #ffffff;
+  box-shadow: 0 4px 18px rgba(61, 20, 38, 0.12), 0 0 0 1px rgba(61, 20, 38, 0.2);
+}
+
+.boundary-search__bar--has-result {
+  border-color: var(--color-primary);
+}
+
+/* ---- Icon ---- */
+.boundary-search__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+}
+
+.boundary-search__bar--focused .boundary-search__icon {
+  color: var(--color-primary);
+}
+
+/* ---- Spinner ---- */
+.boundary-search__spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(61, 20, 38, 0.2);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: boundary-spin 0.6s linear infinite;
+}
+
+@keyframes boundary-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---- Input ---- */
+.boundary-search__input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--color-text-bright);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  min-width: 0;
+}
+
+.boundary-search__input::placeholder {
+  color: var(--color-text-muted);
+  font-size: 12.5px;
+}
+
+/* ---- Clear Button ---- */
+.boundary-search__clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: var(--color-bg-subtle);
+  color: var(--color-text-muted);
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 11px;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+.boundary-search__clear:hover {
+  background: #fdf1e3;
+  color: #a6621e;
+}
+
+/* ---- Dropdown ---- */
+.boundary-search__dropdown {
+  margin-top: 6px;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.boundary-search__suggestion {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  border: none;
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: background 0.15s ease;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.boundary-search__suggestion:last-child {
+  border-bottom: none;
+}
+
+.boundary-search__suggestion:hover {
+  background: var(--color-bg-subtle);
+}
+
+.boundary-search__suggestion-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.boundary-search__suggestion-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.boundary-search__suggestion-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-bright);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.boundary-search__suggestion-detail {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.boundary-search__suggestion-type {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-primary);
+  background: rgba(61, 20, 38, 0.08);
+  border: 1px solid rgba(61, 20, 38, 0.15);
+  padding: 2px 6px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.boundary-search__dropdown--empty,
+.boundary-search__dropdown--error {
+  padding: 12px 14px;
+}
+
+.boundary-search__no-results {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  text-align: center;
+  display: block;
+}
+
+.boundary-search__error {
+  font-size: 12px;
+  color: #c53030;
+  text-align: center;
+  display: block;
+}
+
+/* ============================================================
+   Active Boundary Info Card - Official Government Audit Format
+   ============================================================ */
+.boundary-info {
+  margin-top: 8px;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: 12px 14px;
+}
+
+.boundary-info__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.boundary-info__pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  flex-shrink: 0;
+  box-shadow: 0 0 6px rgba(61, 20, 38, 0.4);
+}
+
+.boundary-info__title {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--color-text-bright);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.boundary-info__type {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-primary);
+  background: rgba(61, 20, 38, 0.08);
+  border: 1px solid rgba(61, 20, 38, 0.2);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.boundary-info__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: var(--color-bg-subtle);
+  color: var(--color-text-muted);
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 10px;
+  flex-shrink: 0;
+}
+
+.boundary-info__close:hover {
+  background: #fdf1e3;
+  color: #a6621e;
+}
+
+/* Stats Row */
+.boundary-info__stats {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.boundary-info__stat {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+}
+
+.boundary-info__stat-icon {
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.boundary-info__stat-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.boundary-info__stat-value {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--color-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.boundary-info__stat-label {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.boundary-info__full-name {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-top: 6px;
+  border-top: 1px solid var(--color-border);
+}

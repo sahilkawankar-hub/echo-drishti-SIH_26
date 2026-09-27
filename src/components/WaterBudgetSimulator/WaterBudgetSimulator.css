@@ -1,0 +1,234 @@
+/* ============================================================
+   WaterBudgetSimulator Styles - Warm Ivory & Deep Plum Theme
+   ============================================================ */
+
+.sim-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(35, 21, 30, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 16px;
+  animation: simFadeIn 0.2s ease-out;
+}
+
+@keyframes simFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.sim-modal {
+  width: 100%;
+  max-width: 620px;
+  background: #FFFFFF;
+  border: 1.5px solid #ECE4D8;
+  border-radius: 16px;
+  box-shadow: 0 12px 38px rgba(61, 20, 38, 0.15);
+  padding: 24px;
+  color: #23151E;
+  font-family: inherit;
+}
+
+.sim-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #ECE4D8;
+}
+
+.sim-header__left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sim-icon {
+  font-size: 22px;
+}
+
+.sim-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #23151E;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+.sim-sub {
+  font-size: 11px;
+  color: #7D6D76;
+  display: block;
+}
+
+.sim-close-btn {
+  background: #FAF7F2;
+  border: 1px solid #ECE4D8;
+  color: #7D6D76;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.sim-close-btn:hover {
+  background: #F8ECEF;
+  color: #3D1426;
+  border-color: #3D1426;
+}
+
+.sim-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sim-inputs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.sim-card {
+  padding: 12px 14px;
+  background: #FAF7F2;
+  border: 1px solid #ECE4D8;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sim-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sim-card__label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #7D6D76;
+}
+
+.sim-card__val {
+  font-size: 12px;
+  font-weight: 800;
+  color: #3D1426;
+  font-variant-numeric: tabular-nums;
+}
+
+.sim-slider {
+  width: 100%;
+  accent-color: #3D1426;
+  cursor: pointer;
+}
+
+.sim-card__meta {
+  font-size: 9.5px;
+  color: #8A7884;
+}
+
+.sim-results-box {
+  padding: 14px 16px;
+  background: #F8ECEF;
+  border: 1px solid #F0D5DD;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sim-results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sim-results-title {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #3D1426;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sim-results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.sim-metric-card {
+  padding: 8px 10px;
+  background: #FFFFFF;
+  border: 1px solid #ECE4D8;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.sim-metric-label {
+  font-size: 10px;
+  color: #7D6D76;
+  font-weight: 700;
+  display: block;
+}
+
+.sim-metric-val {
+  font-size: 16px;
+  font-weight: 800;
+  color: #23151E;
+}
+
+.sim-metric-val--green {
+  color: #1E6B3E;
+}
+
+.sim-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #ECE4D8;
+}
+
+.sim-btn-reset {
+  padding: 8px 14px;
+  background: #F4EFE6;
+  border: 1px solid #E5DCD0;
+  border-radius: 6px;
+  color: #5C4D56;
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sim-btn-reset:hover {
+  background: #EFE8DE;
+  color: #23151E;
+}
+
+.sim-btn-apply {
+  padding: 8px 16px;
+  background: #3D1426;
+  border: 1px solid #3D1426;
+  border-radius: 6px;
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(61, 20, 38, 0.15);
+}
+
+.sim-btn-apply:hover {
+  background: #2D0E1C;
+}

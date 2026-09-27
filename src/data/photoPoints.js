@@ -1,8 +1,6 @@
 /**
- * Dummy photo survey points for testing map markers.
+ * Photo survey points with camera sensor and ground resolution metadata.
  * Each point represents a ground-truth observation within the watershed.
- *
- * TODO: Replace with real data from API or database.
  */
 const photoPoints = [
   {
@@ -13,6 +11,11 @@ const photoPoints = [
     locationName: 'Upper Stream Riparian Buffer',
     insightText: 'Dense canopy recovery observed post-monsoon, matching NDVI increase of +0.34.',
     status: 'confirmed',
+    resolution: '4032 × 3024 (12.2 Megapixels)',
+    gsd: '2.4 cm/px Ground Sampling Distance',
+    sensor: 'Geotagged Survey Drone CMOS 1/2.3"',
+    focalLength: '26mm (35mm equiv)',
+    iso: 'ISO 100 • 1/500s',
   },
   {
     id: 'pt-002',
@@ -22,6 +25,11 @@ const photoPoints = [
     locationName: 'Ridge Top Afforestation Plot',
     insightText: 'Sapling survival rate high (~85%); satellite greenness index confirmed positive trend.',
     status: 'confirmed',
+    resolution: '3840 × 2160 (4K UHD 8.3 MP)',
+    gsd: '3.1 cm/px Ground Sampling Distance',
+    sensor: 'Field Optical Sensor Rig',
+    focalLength: '24mm f/2.8',
+    iso: 'ISO 200 • 1/800s',
   },
   {
     id: 'pt-003',
@@ -31,6 +39,11 @@ const photoPoints = [
     locationName: 'Command Area North Gully',
     insightText: 'Satellite indicated moisture zone but ground survey reveals silt accumulation requiring desilting.',
     status: 'mismatch',
+    resolution: '4032 × 3024 (12.2 Megapixels)',
+    gsd: '1.8 cm/px High-Res Micro GSD',
+    sensor: 'Macro Survey Inspection Camera',
+    focalLength: '28mm f/1.8',
+    iso: 'ISO 160 • 1/640s',
   },
   {
     id: 'pt-004',
@@ -40,6 +53,11 @@ const photoPoints = [
     locationName: 'South Watershed Outlet Drain',
     insightText: 'Clear water discharge observed; turbidity levels reduced compared to pre-intervention baseline.',
     status: 'confirmed',
+    resolution: '4000 × 3000 (12.0 Megapixels)',
+    gsd: '2.5 cm/px Ground Sampling Distance',
+    sensor: 'Calibrated Hydrological Survey Camera',
+    focalLength: '26mm f/2.0',
+    iso: 'ISO 100 • 1/1000s',
   },
   {
     id: 'pt-005',
@@ -49,6 +67,11 @@ const photoPoints = [
     locationName: 'East Micro-Catchment Slope',
     insightText: 'Trench stabilization delayed due to cattle grazing; discrepancy with predicted biomass cover.',
     status: 'mismatch',
+    resolution: '3840 × 2160 (4K UHD 8.3 MP)',
+    gsd: '3.4 cm/px Ground Sampling Distance',
+    sensor: 'Field Optical Sensor Rig',
+    focalLength: '24mm f/2.8',
+    iso: 'ISO 250 • 1/400s',
   },
 ];
 

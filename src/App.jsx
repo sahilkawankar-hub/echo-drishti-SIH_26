@@ -1,19 +1,22 @@
 import { useState, useCallback } from 'react';
+import { LanguageProvider } from './context/LanguageContext';
+import { AuthProvider } from './context/AuthContext';
+import GovHeader from './components/GovHeader/GovHeader';
 import Sidebar from './components/Sidebar/Sidebar';
 import DashboardOverview from './components/Dashboard/DashboardOverview';
 import VerificationQueue from './components/VerificationQueue/VerificationQueue';
-import DisbursementsReports from './components/DisbursementsReports/DisbursementsReports';
+import LoginPage from './components/LoginPage/LoginPage';
 import Navbar from './components/Navbar/Navbar';
 import MapView from './components/MapView/MapView';
 import LayerControls from './components/LayerControls/LayerControls';
 import { DEFAULT_LOCATION_ID } from './data/locations';
 
 /**
- * Root application component.
- * Features sidebar navigation, rich satellite background, and multi-view orchestration
- * between the executive Dashboard Overview and GIS Map View.
+ * Root application component wrapped in LanguageProvider & AuthProvider.
+ * Features institutional geospatial header, sidebar navigation,
+ * dedicated login page with Officer & Public tiers, and GIS Map View.
  */
-export default function App() {
+function AppContent() {
   const [activeView, setActiveView] = useState('overview');
   const [selectedSiteId, setSelectedSiteId] = useState(null);
   const [selectedSite, setSelectedSite] = useState(null);
@@ -36,11 +39,18 @@ export default function App() {
     setSelectedSiteId(null);
   }, []);
 
-  const handleNavigateToMap = useCallback((siteId) => {
+  const handleNavigateToMap = useCallback((siteId, locationId) => {
+    if (locationId) {
+      setActiveLocationId(locationId);
+    }
     if (siteId) {
       setSelectedSiteId(siteId);
     }
     setActiveView('map');
+  }, []);
+
+  const handleNavigateToLogin = useCallback(() => {
+    setActiveView('login');
   }, []);
 
   return (
@@ -54,6 +64,11 @@ export default function App() {
 
         {/* Main Content Area */}
         <div className="app-content-area">
+          {/* Top Institutional Header with Auth Bar (hidden on GIS Map view) */}
+          {activeView !== 'map' && (
+            <GovHeader onNavigateToLogin={handleNavigateToLogin} />
+          )}
+
           {activeView === 'overview' && (
             <main className="app-main">
               <DashboardOverview onNavigateToMap={handleNavigateToMap} />
@@ -88,13 +103,23 @@ export default function App() {
             </main>
           )}
 
-          {activeView === 'reports' && (
+          {activeView === 'login' && (
             <main className="app-main">
-              <DisbursementsReports />
+              <LoginPage onBackToPortal={() => setActiveView('overview')} />
             </main>
           )}
         </div>
       </div>
     </>
+  );
+}
+
+export default function App() {
+  return (
+    <LanguageProvider>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </LanguageProvider>
   );
 }

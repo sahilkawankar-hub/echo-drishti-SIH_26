@@ -1,16 +1,17 @@
 import { useState, useRef, useEffect } from 'react';
 import './LayerControls.css';
 import { locations } from '../../data/locations';
+import { useLanguage } from '../../context/LanguageContext';
 
 /**
- * Floating control panel on the map with a location switcher and toggle switches
- * for each data layer. Opens on click to avoid permanently blocking the map or detail panels.
+ * LayerControls — Official GIS layer switch and reference study basin selector.
  *
  * @param {{
  *   layers: Record<string, boolean>,
  *   onToggleLayer: (key: string) => void,
  *   activeLocationId: string,
  *   onLocationChange: (id: string) => void,
+ *   isPanelOpen?: boolean,
  * }} props
  */
 export default function LayerControls({
@@ -20,18 +21,29 @@ export default function LayerControls({
   onLocationChange,
   isPanelOpen = false,
 }) {
+  const { lang, t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
 
   const layerDefs = [
-    { key: 'vegetation', label: 'Vegetation (NDVI)', icon: '🌿' },
-    { key: 'water',      label: 'Water (NDWI)',      icon: '💧' },
-    { key: 'landuse',    label: 'Land Use / Cover',   icon: '🏗️' },
+    { key: 'vegetation', label: t.vegLayer, icon: '🌿' },
+    { key: 'water',      label: t.waterLayer,      icon: '💧' },
+    { key: 'landuse',    label: t.landuseLayer,    icon: '🏗️' },
   ];
 
   const pilotLocations = locations.filter((l) => l.type === 'pilot');
   const referenceLocations = locations.filter((l) => l.type === 'reference');
   const activeLoc = locations.find((l) => l.id === activeLocationId) || locations[0];
+
+  const getLocationDisplayName = (loc) => {
+    if (!loc) return '';
+    if (lang === 'hi') {
+      if (loc.id === 'chandur-railway') return 'चांदुर रेलवे (अमरावती)';
+      if (loc.id === 'hiware-bazar') return 'हिवरे बाजार (अहमदनगर)';
+      if (loc.id === 'ralegan-siddhi') return 'रालेगण सिद्धि (अहमदनगर)';
+    }
+    return loc.name;
+  };
 
   // Close when clicking outside or pressing Escape
   useEffect(() => {
@@ -68,123 +80,125 @@ export default function LayerControls({
       id="layer-controls-panel"
       ref={containerRef}
     >
-      {/* ---- Collapsible Trigger Button ---- */}
+      {/* ---- Clear Official Trigger Button (Explicitly labeled as Base Study Basin) ---- */}
       <button
         className={`layer-controls__trigger${isOpen ? ' layer-controls__trigger--active' : ''}`}
         onClick={() => setIsOpen((prev) => !prev)}
         aria-expanded={isOpen}
         aria-haspopup="true"
         id="location-switcher-btn"
-        title="Change location and layers"
+        title={t.pilotBasinLabel}
+        type="button"
       >
-        <span className="layer-controls__trigger-icon">📍</span>
+        <span className="layer-controls__trigger-icon" aria-hidden="true">🏛️</span>
         <span className="layer-controls__trigger-body">
-          <span className="layer-controls__trigger-prefix">Location</span>
-          <span className="layer-controls__trigger-name">{activeLoc ? activeLoc.name : 'Select Location'}</span>
+          <span className="layer-controls__trigger-prefix">{t.pilotBasinPrefix}</span>
+          <span className="layer-controls__trigger-name">
+            {getLocationDisplayName(activeLoc)}
+          </span>
         </span>
         <span className={`layer-controls__trigger-arrow${isOpen ? ' layer-controls__trigger-arrow--open' : ''}`}>
           ▾
         </span>
       </button>
 
-      {/* ---- Popover Panel ---- */}
+      {/* ---- Official Popover Panel ---- */}
       {isOpen && (
         <div className="layer-controls__panel" id="location-switcher-panel">
-          {/* ---- Location Switcher Header ---- */}
+          {/* Header */}
           <div className="location-section" id="location-switcher">
             <div className="layer-controls__header">
               <div className="layer-controls__header-left">
-                <span className="layer-controls__header-icon">📍</span>
-                <span className="layer-controls__title">Locations</span>
+                <span className="layer-controls__header-icon">🗺️</span>
+                <span className="layer-controls__title">{t.pilotBasinLabel}</span>
               </div>
               <button
                 className="layer-controls__close-btn"
                 onClick={() => setIsOpen(false)}
-                aria-label="Close location menu"
+                aria-label="Close"
                 id="layer-controls-close-btn"
+                type="button"
               >
                 ✕
               </button>
             </div>
 
-          {/* Pilot Site Group */}
-          <span className="location-section__group-label">Pilot Site</span>
-          {pilotLocations.map((loc) => {
-            const isActive = loc.id === activeLocationId;
-            return (
-              <div
-                key={loc.id}
-                className={`location-row${isActive ? ' location-row--active' : ''}`}
-                onClick={() => handleSelectLocation(loc.id)}
-                role="radio"
-                aria-checked={isActive}
-                id={`location-row-${loc.id}`}
-              >
-                <span className={`location-row__radio${isActive ? ' location-row__radio--active' : ''}`} />
-                <span className="location-row__name">{loc.name}</span>
-              </div>
-            );
-          })}
+            {/* Pilot Site Group */}
+            <span className="location-section__group-label">{t.pilotOptionLabel}</span>
+            {pilotLocations.map((loc) => {
+              const isActive = loc.id === activeLocationId;
+              return (
+                <div
+                  key={loc.id}
+                  className={`location-row${isActive ? ' location-row--active' : ''}`}
+                  onClick={() => handleSelectLocation(loc.id)}
+                  role="radio"
+                  aria-checked={isActive}
+                  id={`location-row-${loc.id}`}
+                >
+                  <span className={`location-row__radio${isActive ? ' location-row__radio--active' : ''}`} />
+                  <span className="location-row__name">{getLocationDisplayName(loc)}</span>
+                </div>
+              );
+            })}
 
-          {/* Reference Cases Group */}
-          <span className="location-section__group-label">Reference Cases</span>
-          {referenceLocations.map((loc) => {
-            const isActive = loc.id === activeLocationId;
+            {/* Reference Cases Group */}
+            <span className="location-section__group-label">{t.refOptionLabel}</span>
+            {referenceLocations.map((loc) => {
+              const isActive = loc.id === activeLocationId;
+              return (
+                <div
+                  key={loc.id}
+                  className={`location-row${isActive ? ' location-row--active' : ''}`}
+                  onClick={() => handleSelectLocation(loc.id)}
+                  role="radio"
+                  aria-checked={isActive}
+                  id={`location-row-${loc.id}`}
+                >
+                  <span className={`location-row__radio${isActive ? ' location-row__radio--active' : ''}`} />
+                  <span className="location-row__name">{getLocationDisplayName(loc)}</span>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="layer-controls__divider" />
+
+          {/* ---- Data Layers ---- */}
+          <div className="layer-controls__header">
+            <span className="layer-controls__header-icon">📡</span>
+            <span className="layer-controls__title">{t.dataLayersTitle}</span>
+          </div>
+
+          {/* Layer Rows */}
+          {layerDefs.map(({ key, label, icon }) => {
+            const isActive = !!layers[key];
             return (
               <div
-                key={loc.id}
-                className={`location-row${isActive ? ' location-row--active' : ''}`}
-                onClick={() => handleSelectLocation(loc.id)}
-                role="radio"
+                key={key}
+                data-layer={key}
+                className={`layer-row${isActive ? ' layer-row--active' : ''}`}
+                onClick={() => onToggleLayer(key)}
+                role="switch"
                 aria-checked={isActive}
-                id={`location-row-${loc.id}`}
+                id={`layer-row-${key}`}
               >
-                <span className={`location-row__radio${isActive ? ' location-row__radio--active' : ''}`} />
-                <span className="location-row__name">{loc.name}</span>
+                <label className="layer-toggle" onClick={(e) => e.stopPropagation()}>
+                  <input
+                    type="checkbox"
+                    checked={isActive}
+                    onChange={() => onToggleLayer(key)}
+                  />
+                  <span className="layer-toggle__track" />
+                </label>
+
+                <span className="layer-row__icon">{icon}</span>
+                <span className="layer-row__label">{label}</span>
               </div>
             );
           })}
         </div>
-
-        <div className="layer-controls__divider" />
-
-        {/* ---- Data Layers ---- */}
-        <div className="layer-controls__header">
-          <span className="layer-controls__header-icon">📡</span>
-          <span className="layer-controls__title">Data Layers</span>
-        </div>
-
-        {/* Layer Rows */}
-        {layerDefs.map(({ key, label, icon }) => {
-          const isActive = !!layers[key];
-          return (
-            <div
-              key={key}
-              data-layer={key}
-              className={`layer-row${isActive ? ' layer-row--active' : ''}`}
-              onClick={() => onToggleLayer(key)}
-              role="switch"
-              aria-checked={isActive}
-              id={`layer-row-${key}`}
-            >
-              {/* Toggle Switch */}
-              <label className="layer-toggle" onClick={(e) => e.stopPropagation()}>
-                <input
-                  type="checkbox"
-                  checked={isActive}
-                  onChange={() => onToggleLayer(key)}
-                />
-                <span className="layer-toggle__track" />
-              </label>
-
-              <span className="layer-row__icon">{icon}</span>
-              <span className="layer-row__label">{label}</span>
-            </div>
-          );
-        })}
-      </div>
       )}
     </div>
   );
 }
-

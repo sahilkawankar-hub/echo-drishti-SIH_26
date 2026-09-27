@@ -1,0 +1,231 @@
+/* ============================================================
+   MeasureTool Component Styles
+   Distance measurement tool with floating panel & map overlays
+   ============================================================ */
+
+/* ---- Container ---- */
+.measure-tool {
+  position: absolute;
+  bottom: 105px;
+  right: var(--space-4);
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+
+/* ---- Toggle Button ---- */
+.measure-tool__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-fast);
+}
+
+.measure-tool__btn:hover {
+  color: var(--color-primary);
+  border-color: var(--color-border-active);
+  background: rgba(56, 189, 248, 0.08);
+  transform: translateY(-1px);
+}
+
+.measure-tool__btn--active {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background: rgba(56, 189, 248, 0.15);
+  box-shadow: var(--shadow-md), 0 0 12px rgba(56, 189, 248, 0.25);
+}
+
+/* ---- Panel ---- */
+.measure-tool__panel {
+  width: 220px;
+  background: rgba(15, 23, 42, 0.94);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-3);
+  animation: measure-panel-in 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes measure-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.measure-tool__panel-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.measure-tool__panel-icon {
+  font-size: 14px;
+}
+
+.measure-tool__panel-title {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-bright);
+}
+
+.measure-tool__hint {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: var(--space-2) 0;
+  opacity: 0.8;
+}
+
+/* ---- Segments ---- */
+.measure-tool__segments {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: var(--space-2);
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.measure-tool__segments::-webkit-scrollbar {
+  width: 4px;
+}
+.measure-tool__segments::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 10px;
+}
+
+.measure-tool__segment {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+}
+
+.measure-tool__segment:hover {
+  background: rgba(56, 189, 248, 0.05);
+}
+
+.measure-tool__segment--preview {
+  opacity: 0.6;
+  font-style: italic;
+}
+
+.measure-tool__segment-label {
+  color: var(--color-text-muted);
+}
+
+.measure-tool__segment-value {
+  color: var(--color-text);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Total ---- */
+.measure-tool__total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-2) var(--space-2);
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-2);
+}
+
+.measure-tool__total-label {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-primary);
+}
+
+.measure-tool__total-value {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text-bright);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Actions ---- */
+.measure-tool__actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.measure-tool__action-btn {
+  flex: 1;
+  padding: 4px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.measure-tool__action-btn:hover {
+  background: rgba(56, 189, 248, 0.08);
+  color: var(--color-text);
+  border-color: var(--color-border-active);
+}
+
+.measure-tool__action-btn--clear:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.measure-tool__action-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ---- Map Labels (Leaflet DivIcon) ---- */
+.measure-label {
+  background: transparent !important;
+  border: none !important;
+  pointer-events: none;
+}
+
+.measure-label__text {
+  display: inline-block;
+  padding: 2px 6px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 4px;
+  font-family: var(--font-family);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-primary);
+  white-space: nowrap;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}

@@ -1,16 +1,13 @@
 import { useState, useCallback } from 'react';
 import './BeforeAfterToggle.css';
+import { useLanguage } from '../../context/LanguageContext';
 
 /**
- * A two-state toggle (Before / After) rendered as a floating pill bar.
- * Changes the `activeDate` state and logs it to the console.
- *
- * TODO: Wire `activeDate` to actual layer-swapping logic so that
- *       satellite imagery changes between two time snapshots.
- *
- * @param {{ onChange?: (activeDate: 'before' | 'after') => void }} props
+ * A two-state temporal toggle (Before / After) rendered as a floating pill bar.
+ * Supports Hindi and English.
  */
-export default function BeforeAfterToggle({ value, onChange }) {
+export default function BeforeAfterToggle({ value, onChange, isPanelOpen = false }) {
+  const { lang, t } = useLanguage();
   const [internalDate, setInternalDate] = useState('before');
   const activeDate = value !== undefined ? value : internalDate;
 
@@ -23,18 +20,19 @@ export default function BeforeAfterToggle({ value, onChange }) {
   );
 
   return (
-    <div className="ba-toggle" id="before-after-toggle">
-      <span className="ba-toggle__label">🕓 Temporal</span>
-      <div className="ba-toggle__divider" />
-
+    <div
+      className={`ba-toggle${isPanelOpen ? ' ba-toggle--panel-open' : ''}`}
+      id="before-after-toggle"
+    >
       <button
         id="ba-btn-before"
         className={`ba-toggle__btn${activeDate === 'before' ? ' ba-toggle__btn--active' : ''}`}
         onClick={() => handleSwitch('before')}
         aria-pressed={activeDate === 'before'}
+        type="button"
       >
         <span className="ba-toggle__btn-icon">◀</span>
-        Before
+        {t.toggleBefore}
       </button>
 
       <button
@@ -42,8 +40,9 @@ export default function BeforeAfterToggle({ value, onChange }) {
         className={`ba-toggle__btn${activeDate === 'after' ? ' ba-toggle__btn--active' : ''}`}
         onClick={() => handleSwitch('after')}
         aria-pressed={activeDate === 'after'}
+        type="button"
       >
-        After
+        {t.toggleAfter}
         <span className="ba-toggle__btn-icon">▶</span>
       </button>
     </div>

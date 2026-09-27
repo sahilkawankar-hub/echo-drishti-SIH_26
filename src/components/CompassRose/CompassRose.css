@@ -1,0 +1,223 @@
+/* ============================================================
+   CompassRose & Rotation Controls - Google Maps Style
+   Positioned bottom-right of the map
+   ============================================================ */
+
+.compass-control-group {
+  position: absolute;
+  bottom: 24px;
+  right: var(--space-4);
+  z-index: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(250, 246, 240, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid var(--color-border);
+  border-radius: 28px;
+  padding: 4px 6px;
+  box-shadow: var(--shadow-md);
+  user-select: none;
+}
+
+.compass-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.compass-btn:hover {
+  background: var(--color-bg-subtle);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: scale(1.05);
+}
+
+.compass-btn:active {
+  transform: scale(0.95);
+}
+
+/* Main Compass Rose Button */
+.compass-rose {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 6px rgba(61, 20, 38, 0.15));
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.compass-rose:hover {
+  filter: drop-shadow(0 0 8px rgba(61, 20, 38, 0.25));
+}
+
+.compass-rose:active {
+  transform: scale(0.95);
+}
+
+/* Outer Ring */
+.compass-rose__ring {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0%, #f4efe6 100%);
+  border: 1.5px solid var(--color-border);
+  box-shadow:
+    0 1px 4px rgba(61, 20, 38, 0.1),
+    inset 0 0 10px rgba(61, 20, 38, 0.04);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.compass-rose:hover .compass-rose__ring {
+  border-color: var(--color-primary);
+}
+
+/* Tick Marks */
+.compass-rose__tick {
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  width: 1px;
+  height: 3px;
+  margin-left: -0.5px;
+  background: rgba(148, 163, 184, 0.3);
+  transform-origin: 50% calc(22px - 2px);
+}
+
+.compass-rose__tick--major {
+  width: 1.2px;
+  height: 4.5px;
+  margin-left: -0.6px;
+  background: rgba(148, 163, 184, 0.7);
+}
+
+/* Cardinal Direction Labels */
+.compass-rose__label {
+  position: absolute;
+  font-family: var(--font-family);
+  font-size: 7.5px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-align: center;
+  line-height: 1;
+}
+
+.compass-rose__label--n {
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ef4444;
+  font-size: 8.5px;
+  text-shadow: 0 0 4px rgba(239, 68, 68, 0.6);
+}
+
+.compass-rose__label--s {
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #94a3b8;
+}
+
+.compass-rose__label--e {
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+.compass-rose__label--w {
+  top: 50%;
+  left: 4px;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+/* Center Needle */
+.compass-rose__needle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3px;
+  height: 22px;
+  transform: translate(-50%, -50%);
+}
+
+.compass-rose__needle-north {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-bottom: 10px solid #ef4444;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 0 3px rgba(239, 68, 68, 0.6));
+}
+
+.compass-rose__needle-south {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 10px solid rgba(148, 163, 184, 0.7);
+  transform: translateX(-50%);
+}
+
+.compass-rose__center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  transform: translate(-50%, -50%);
+}
+
+/* Bearing Badge */
+.compass-bearing-badge {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--color-primary);
+  background: #ffffff;
+  padding: 1px 5px;
+  border-radius: 3px;
+  border: 1px solid var(--color-border);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  box-shadow: var(--shadow-sm);
+}
+
+.compass-rose--rotated .compass-bearing-badge {
+  color: #a6621e;
+  border-color: #f4ddc4;
+  background: #fdf1e3;
+}

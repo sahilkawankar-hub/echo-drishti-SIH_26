@@ -1,94 +1,103 @@
 /* ============================================================
-   Sidebar Component Styles (Theme Reference)
+   Portal Sidebar Styles - Warm Ivory & Deep Plum Theme
+   Matches luxury institutional reference palette
    ============================================================ */
 
 .portal-sidebar {
   width: var(--sidebar-width);
   height: 100vh;
-  background: rgba(13, 20, 36, 0.85);
-  backdrop-filter: blur(18px) saturate(1.4);
-  -webkit-backdrop-filter: blur(18px) saturate(1.4);
-  border-right: 1px solid var(--color-border);
+  background: #FAF6F0;
+  border-right: 1px solid #ECE4D8;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  padding: var(--space-4) var(--space-3);
-  z-index: 100;
+  z-index: 50;
   user-select: none;
+  contain: paint;
+  isolation: isolate;
+  overflow: hidden;
 }
 
-/* ---------- Brand Section ---------- */
+/* Brand Banner */
 .sidebar-brand {
+  padding: 18px 16px 14px;
+  border-bottom: 1px solid #ECE4D8;
+  background: #FAF6F0;
+}
+
+.sidebar-brand__accent-bar {
+  width: 100%;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #3D1426 0%, #DFA15A 50%, #3D1426 100%);
+  margin-bottom: 12px;
+}
+
+.sidebar-brand__identity-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: var(--space-2) var(--space-2) var(--space-4);
-  border-bottom: 1px solid var(--color-border);
-  margin-bottom: var(--space-4);
+  gap: 10px;
 }
 
-.sidebar-brand__left {
+.sidebar-brand__logo-wrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1.5px solid #DFA15A;
+  box-shadow: 0 2px 6px rgba(61, 20, 38, 0.1);
+  overflow: hidden;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  justify-content: center;
+  padding: 1px;
 }
 
-.sidebar-brand__dot-wrap {
-  width: 18px;
-  height: 18px;
+.sidebar-brand__logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 50%;
-  background: rgba(16, 185, 129, 0.15);
-  border: 1px solid rgba(16, 185, 129, 0.4);
-  display: grid;
-  place-items: center;
 }
 
-.sidebar-brand__dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--color-emerald);
-  box-shadow: 0 0 8px var(--color-emerald);
-}
-
-.sidebar-brand__title {
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  color: #f1f5f9;
-  line-height: 1.15;
-}
-
-.sidebar-brand__badge {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  padding: 2px 7px;
-  border-radius: 6px;
-}
-
-.sidebar-brand__live-tag {
-  font-size: 8px;
-  font-weight: 800;
-  color: var(--color-emerald);
-  letter-spacing: 0.06em;
-}
-
-.sidebar-brand__version {
-  font-size: 8px;
-  color: #94a3b8;
-  font-weight: 600;
-}
-
-/* ---------- Navigation Section ---------- */
-.sidebar-section__label {
-  font-size: 0.68rem;
+.sidebar-brand__dept-tag {
+  font-size: 9.5px;
   font-weight: 700;
-  color: #64748b;
   letter-spacing: 0.08em;
-  padding: 0 var(--space-2) var(--space-2);
+  color: #9E743A !important;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.sidebar-brand__main-title {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #23151E;
+  line-height: 1.2;
+}
+
+.sidebar-brand__sub-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #8A7884;
+  line-height: 1.2;
+}
+
+/* Section */
+.sidebar-section {
+  padding: 16px 12px 10px;
+}
+
+.sidebar-section__label {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #9E743A;
+  text-transform: uppercase;
+  padding: 0 10px 8px;
 }
 
 .sidebar-nav {
@@ -97,132 +106,146 @@
   gap: 4px;
 }
 
+/* Nav Item */
 .sidebar-nav__item {
   position: relative;
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 10px;
   width: 100%;
   padding: 9px 12px;
   background: transparent;
   border: 1px solid transparent;
   border-radius: 8px;
-  color: #94a3b8;
-  font-family: var(--font-family);
-  font-size: 0.82rem;
-  font-weight: 500;
+  color: #5C4D56;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
   cursor: pointer;
   text-align: left;
-  transition: all var(--transition-fast);
+  transition: all 0.15s ease;
 }
 
 .sidebar-nav__item:hover {
-  background: rgba(255, 255, 255, 0.04);
-  color: #f8fafc;
+  background: #EFE8DE;
+  color: #23151E;
 }
 
 .sidebar-nav__item--active {
-  background: rgba(16, 185, 129, 0.12);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  font-weight: 600;
+  background: #3D1426 !important;
+  color: #FFFFFF !important;
+  border-color: #3D1426 !important;
+  box-shadow: 0 2px 8px rgba(61, 20, 38, 0.2) !important;
 }
 
 .sidebar-nav__indicator {
   position: absolute;
-  left: -2px;
+  left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 4px;
-  height: 18px;
-  border-radius: 4px;
-  background: #34d399;
-  box-shadow: 0 0 8px rgba(52, 211, 153, 0.6);
+  width: 3px;
+  height: 20px;
+  background: #DFA15A;
+  border-radius: 0 2px 2px 0;
 }
 
 .sidebar-nav__icon {
-  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: currentColor;
+  flex-shrink: 0;
 }
 
 .sidebar-nav__text {
   flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .sidebar-nav__badge {
   font-size: 10px;
-  font-weight: 700;
-  background: rgba(245, 158, 11, 0.2);
-  color: #fbbf24;
+  font-weight: 800;
   padding: 1px 6px;
-  border-radius: 999px;
-  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: 10px;
+  background: #FDF1E3;
+  color: #A6621E;
+  border: 1px solid #F4DDC4;
 }
 
-/* ---------- Spacer ---------- */
+.sidebar-nav__item--active .sidebar-nav__badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
 .sidebar-spacer {
   flex: 1;
 }
 
-/* ---------- Uplink Telemetry Box ---------- */
+/* Telemetry Footer */
 .sidebar-telemetry {
-  background: rgba(15, 23, 42, 0.65);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-3);
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  padding: 12px 14px;
+  margin: 12px;
+  background: #FFFFFF;
+  border: 1px solid #ECE4D8;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(61, 20, 38, 0.03);
 }
 
 .sidebar-telemetry__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.7rem;
+  margin-bottom: 6px;
+}
+
+.sidebar-telemetry__label {
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: 0.05em;
-  color: #94a3b8;
+  letter-spacing: 0.06em;
+  color: #8A7884;
 }
 
 .sidebar-telemetry__val {
   display: flex;
   align-items: center;
   gap: 4px;
-  color: #34d399;
-  font-family: monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: #1E6B3E;
 }
 
 .sidebar-telemetry__dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #34d399;
-  box-shadow: 0 0 6px #34d399;
-  animation: blink 2s infinite;
+  background: #1E6B3E;
 }
 
 .sidebar-telemetry__bar {
   width: 100%;
   height: 4px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
+  background: #EAF5EE;
+  border-radius: 2px;
   overflow: hidden;
+  margin-bottom: 6px;
 }
 
 .sidebar-telemetry__fill {
   height: 100%;
-  background: linear-gradient(90deg, #10b981, #38bdf8);
-  border-radius: 999px;
+  background: #1E6B3E;
 }
 
 .sidebar-telemetry__footer {
   display: flex;
   justify-content: space-between;
-  font-size: 0.65rem;
-  color: #64748b;
+  font-size: 9.5px;
+  color: #8A7884;
 }
 
 .sidebar-telemetry__status {
-  color: #38bdf8;
-  font-weight: 500;
+  color: #3D1426;
+  font-weight: 700;
 }

@@ -85,7 +85,7 @@ export const locations = [
     ndviBefore: ndviBeforeHB,
     ndviAfter: ndviAfterHB,
     hasPhotoMarkers: false,
-    hasSiteMarkers: false,
+    hasSiteMarkers: true,
     hasBoundary: false,
   },
   {
@@ -98,7 +98,7 @@ export const locations = [
     ndviBefore: ndviBeforeRS,
     ndviAfter: ndviAfterRS,
     hasPhotoMarkers: false,
-    hasSiteMarkers: false,
+    hasSiteMarkers: true,
     hasBoundary: false,
   },
 ];

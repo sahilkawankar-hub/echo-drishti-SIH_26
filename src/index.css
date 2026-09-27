@@ -1,37 +1,45 @@
 /* ============================================================
-   Watershed Monitor — Global Styles & Design Tokens
+   National Watershed Portal — Official Government Design Tokens
    ============================================================ */
 
-/* ---------- CSS Custom Properties (Design Tokens) ---------- */
+/* ---------- CSS Custom Properties (Official Government Tokens - Warm Ivory & Deep Plum) ---------- */
 :root {
-  /* Palette */
-  --color-bg-dark: #0b1120;
-  --color-bg-nav: rgba(11, 17, 32, 0.82);
-  --color-bg-panel: rgba(15, 23, 42, 0.88);
-  --color-bg-card: rgba(30, 41, 59, 0.7);
-  --color-surface: #1e293b;
-  --color-border: rgba(99, 155, 255, 0.12);
-  --color-border-active: rgba(99, 155, 255, 0.35);
+  /* Warm Ivory, Cream & Deep Plum Palette */
+  --color-bg-dark: #FAF6F0;
+  --color-bg-ivory: #FAF6F0;
+  --color-bg-panel: #FFFFFF;
+  --color-bg-card: #FFFFFF;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #F6F0E8;
+  --color-border: #ECE4D8;
+  --color-border-active: #3D1426;
+  --color-card-border: #ECE4D8;
 
-  --color-primary: #38bdf8;
-  --color-primary-glow: rgba(56, 189, 248, 0.25);
-  --color-accent-green: #34d399;
-  --color-accent-blue: #60a5fa;
-  --color-accent-amber: #fbbf24;
-  --color-accent-red: #f87171;
+  /* Primary Accents & Institutional Theme Colors */
+  --color-primary: #3D1426;         /* Deep Rich Plum / Wine */
+  --color-primary-dark: #2D0E1C;    /* Darker Wine */
+  --color-primary-light: #521B34;
+  --color-primary-glow: rgba(61, 20, 38, 0.12);
 
-  --color-text: #e2e8f0;
-  --color-text-muted: #94a3b8;
-  --color-text-bright: #f1f5f9;
+  --color-accent-gold: #DFA15A;     /* Warm Amber Gold */
+  --color-accent-green: #1E6B3E;    /* Deep Forest Green */
+  --color-accent-amber: #B46B18;    /* Warm Ochre / Amber */
+  --color-accent-red: #D93838;
+
+  /* Text & Readability */
+  --color-text: #23151E;            /* Deep Plum-Charcoal */
+  --color-text-muted: #8A7884;      /* Warm Muted Taupe */
+  --color-text-bright: #1E1219;
+  --color-text-dim: #A898A2;
 
   /* Typography */
-  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-size-xs: 0.7rem;
-  --font-size-sm: 0.8rem;
-  --font-size-base: 0.9rem;
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-size-xs: 0.72rem;
+  --font-size-sm: 0.82rem;
+  --font-size-base: 0.92rem;
   --font-size-lg: 1.05rem;
   --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.6rem;
+  --font-size-2xl: 1.55rem;
 
   /* Spacing */
   --space-1: 4px;
@@ -42,33 +50,26 @@
   --space-6: 24px;
   --space-8: 32px;
 
-  /* Radii */
+  /* Disciplined Official Radii (smooth, refined) */
+  --radius-xs: 4px;
   --radius-sm: 6px;
   --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.45);
-  --shadow-glow: 0 0 20px var(--color-primary-glow);
+  /* Subtle Warm Professional Shadows */
+  --shadow-sm: 0 1px 3px rgba(61, 20, 38, 0.04);
+  --shadow-md: 0 3px 10px rgba(61, 20, 38, 0.06);
+  --shadow-lg: 0 8px 24px rgba(61, 20, 38, 0.08);
+  --shadow-glow: 0 0 16px rgba(61, 20, 38, 0.12);
 
   /* Transitions */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 220ms cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* Layout */
-  --navbar-height: 56px;
-  --sidebar-width: 220px;
-
-  /* Theme Accents (Refined from reference) */
-  --color-emerald: #10b981;
-  --color-emerald-glow: rgba(16, 185, 129, 0.2);
-  --color-teal: #0d9488;
-  --color-card-light-bg: rgba(22, 33, 54, 0.78);
-  --color-card-border: rgba(148, 163, 184, 0.14);
+  /* Layout Constants */
+  --navbar-height: 52px;
+  --sidebar-width: 252px;
 }
 
 /* ---------- Reset & Base ---------- */
@@ -97,20 +98,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Global Background Image Layer */
+/* Base Warm Satellite Backdrop */
 .app-satellite-bg {
   position: fixed;
   inset: 0;
+  background-color: #FAF6F0;
   background-image: linear-gradient(
-      135deg,
-      rgba(11, 17, 32, 0.88) 0%,
-      rgba(15, 23, 42, 0.82) 50%,
-      rgba(8, 14, 26, 0.92) 100%
-    ),
-    url('/watershed_bg.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+      180deg,
+      rgba(250, 246, 240, 0.96) 0%,
+      rgba(250, 246, 240, 0.98) 100%
+    );
   z-index: 0;
   pointer-events: none;
 }
@@ -124,6 +121,7 @@ body {
   overflow: hidden;
   position: relative;
   z-index: 1;
+  background: #FAF6F0;
 }
 
 .app-content-area {
@@ -133,6 +131,7 @@ body {
   height: 100vh;
   overflow: hidden;
   position: relative;
+  background: #FAF6F0;
 }
 
 .app-main {
@@ -140,4 +139,5 @@ body {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
+  background: #FAF6F0;
 }
