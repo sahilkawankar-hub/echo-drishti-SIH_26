@@ -1,11 +1,11 @@
-# echo-drishti
+# Eco-drishti
 
 > Geospatial intelligence platform for visualizing, analyzing, and
 > monitoring watershed development outcomes.
 
 **Smart India Hackathon 2026 \| Team SYNC**
 
-echo-drishti is a web-based watershed monitoring and verification
+Eco-drishti is a web-based watershed monitoring and verification
 prototype designed around the Smart India Hackathon problem statement
 **SIH26015**: *Application of Geospatial Techniques for visualization
 and analysis to interpret Geo-Coded Images to enhance Watershed
